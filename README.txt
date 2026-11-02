@@ -1,0 +1,1 @@
+PUBLIC V29: No login. Deploy index.html via HTTPS. Enable Cloud Firestore and publish firestore_public.rules. WARNING: public write means anyone can change or delete fleet and reminder settings; use a backend/admin approval before production. Firebase reminder sending is NOT automatically enabled.
