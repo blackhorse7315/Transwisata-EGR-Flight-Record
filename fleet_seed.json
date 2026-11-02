@@ -1,0 +1,76 @@
+{
+  "rows": [
+    {
+      "reg": "VP-CGO",
+      "type": "Global Express",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    },
+    {
+      "reg": "PK-TWY",
+      "type": "Gulfstream IV-SP",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    },
+    {
+      "reg": "PK-TWX",
+      "type": "Beechcraft King Air 350i",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    },
+    {
+      "reg": "PK-TWW",
+      "type": "CASA NC212-200",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    },
+    {
+      "reg": "PK-TWV",
+      "type": "Bell 412EP",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    },
+    {
+      "reg": "PK-TWZ",
+      "type": "Agusta A109S Grand",
+      "lastFlight": "",
+      "lastRoute": "",
+      "nextSchedule": "",
+      "route": "",
+      "lastEGR": "",
+      "lastCrew": "",
+      "remarks": "",
+      "schedules": []
+    }
+  ]
+}
