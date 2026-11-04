@@ -92,7 +92,22 @@ onSnapshot(remRef,snap=>{window.twaReminderCache=snap.exists()?snap.data():{};if
 </script><script>
 function printSchedulePDF(){
   const dateLabel=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'Asia/Jakarta'}).format(new Date());
-  document.title='Transwisata | Flight Schedule & EGR '+dateLabel;
-  window.print();
+  const title='Transwisata | Flight Schedule & EGR '+dateLabel;
+  document.title=title;
+  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  if(!isIOS){window.print();return;}
+  const heads=['AIRCRAFT','LAST FLIGHT DATE / ROUTE','NEXT SCHEDULE DATE / ROUTE','LAST EGR','NEXT EGR (+10D)','EGR SUGGEST','FLIGHT RECENCY 90D','LAST CREW'];
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])).replace(/\n/g,'<br>');
+  const rows=data.map(x=>{
+    const c=calc(x);
+    const flights=schedules(x).filter(v=>v.date||v.endDate||v.route).map((v,i)=>(i+1)+'. '+fmtRange(v)+'\n'+(v.route||'—')).join('\n');
+    const crew=String(x.lastCrew||'').split('/').map(v=>v.trim()).filter(Boolean).join(' /\n');
+    const vals=[x.reg+'\n'+x.type,fmt(x.lastFlight)+'\n'+(x.lastRoute||'—'),flights||'—',fmt(x.lastEGR),fmt(c.next),c.covered?'COVERED BY EGR':fmt(c.suggest),fmt(c.d90),crew||'—'];
+    return '<tr>'+vals.map(v=>'<td>'+esc(v)+'</td>').join('')+'</tr>';
+  }).join('');
+  const report='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>'+esc(title)+'</title><style>@page{size:A4 landscape;margin:9mm}*{box-sizing:border-box}body{font-family:Arial,Helvetica,sans-serif;color:#152c43;background:white;margin:0;padding:14px}h1{text-align:center;font-size:18px;margin:10px 0 5px}.sub{text-align:center;font-size:11px;color:#51677c;margin-bottom:15px}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{border:1px solid #b0bfcd;padding:6px 4px;vertical-align:top;overflow-wrap:anywhere;font-size:9px;line-height:1.35}th{background:#214765;color:white;text-align:center;font-size:9px}tbody tr:nth-child(even){background:#f0f5f9}th:nth-child(1){width:12%}th:nth-child(2){width:13%}th:nth-child(3){width:21%}th:nth-child(4),th:nth-child(5),th:nth-child(6),th:nth-child(7){width:10%}th:nth-child(8){width:14%}.foot{text-align:center;font-size:9px;color:#52677a;margin-top:12px}.tools{background:#edf4fa;padding:12px;margin-bottom:14px;border-radius:9px;font-size:13px}.tools button{background:#1379bb;color:white;border:0;border-radius:7px;padding:12px 16px;font-size:15px;font-weight:bold}.tools p{margin:8px 0 0}@media print{body{padding:0}.tools{display:none!important}thead{display:table-header-group}tr{break-inside:avoid;page-break-inside:avoid}th{-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body><div class="tools"><button onclick="window.print()">Print / Save PDF</button><p>iPhone: tekan tombol di atas, lalu pilih Print. Pada preview, buka Share dan pilih Save to Files. Jika dialog Print tidak muncul, gunakan menu Share browser → Print.</p></div><h1>SCHEDULE TRANSWISATA FLEET\'S</h1><div class="sub">PT. TRANSWISATA PRIMA AVIATION | As of '+esc(dateLabel)+'</div><table><thead><tr>'+heads.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+rows+'</tbody></table><div class="foot">Powered by SkyOps Solution</div></body></html>';
+  const tab=window.open('','_blank');
+  if(tab){tab.document.open();tab.document.write(report);tab.document.close();tab.focus();}
+  else{alert('Izinkan pop-up untuk website ini di Safari, lalu coba lagi. Alternatif: gunakan menu Share → Print pada halaman aplikasi.');}
 }
 </script></body></html>
